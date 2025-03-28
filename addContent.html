@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STUD.AI Admin</title>
+
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!--CUSTOM BASIC STYLES-->
+    <link href="assets/css/basic.css" rel="stylesheet" />
+    <!--CUSTOM MAIN STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+  <div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">STUD.AI</a>
+        </div>
+
+        <div class="header-right">
+
+         
+            <button class="btn btn-danger" onclick="logout();" title="Logout"><i class="fa fa-sign-out"></i></button>
+
+        </div>
+    </nav>
+    <!-- /. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    
+                    <div class="user-img-div">
+                        <div class="row">
+                        <div class="col-md-3">
+                            
+                        <img src="assets/img/defaultDP.png" style="max-width:50px" class="img-thumbnail" />
+                        </div>
+                        <div class="col-md-9">
+                           <div class="inner-text">
+                           <span id="uName"></span>
+                        </div> 
+                        </div>
+                    </div>
+
+                        
+                    </div>
+
+                </li>
+
+
+              
+                <li>
+                  <a href="#"><i class="fa fa-dollar "></i>Students <span class="fa arrow"></span></a>
+                   <ul class="nav nav-second-level">
+                     
+                       <li>
+                          <a href="dashboard.html"><i class="fa fa-dollar "></i>Get All Student </a>
+                      </li>
+                    <li>
+                      <a href="BlockList.html"><i class="fa fa-dollar "></i>Block Student </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                  <a  href="#"><i class="fa fa-dashboard "></i>Content</a>
+                  <ul class="nav nav-second-level">                            
+                          
+                      <li>
+                          <a  href="addContent.html"><i class="fa fa-dashboard "></i>Upload Content</a>
+                      </li>
+                      <li>
+                        <a  href="viewContent.html"><i class="fa fa-dashboard "></i>View Content</a>
+                      </li>
+                  </ul>
+              </li>
+              <li>
+                <a  href="#"><i class="fa fa-dashboard "></i>Question</a>
+                <ul class="nav nav-second-level">                            
+                    <li>
+                        <a  href="addContent.html"><i class="fa fa-dashboard "></i>Upload Sample Paper</a>
+                    </li>
+                    <li>
+                      <a  href="viewContent.html"><i class="fa fa-dashboard "></i>Regenerate or Download </a>
+                    </li>                         
+
+                </ul>
+            </li>
+          </ul>
+
+      </div>
+
+  </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">Upload Content</h1>
+                       
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-body">
+                            <!-- <form role="form"> -->
+                              <!-- Name Field -->
+                              <div class="form-group">
+                                <label for="name">syllabus_short_name</label>
+                                <input id="name" class="form-control" type="text" placeholder="Enter syllabus name " />
+                                <p class="help-block">Please provide your syllabus short name.</p>
+                              </div>
+                          
+                              <!-- Title Field -->
+                              <div class="form-group">
+                                <label for="title">class_name</label>
+                                <input id="title" class="form-control" type="text" placeholder="Enter class name" />
+                                <p class="help-block">Provide a class name .</p>
+                              </div>
+                          
+                              <!-- Start Time Field -->
+                              <!-- <div class="form-group">
+                                <label for="start_time">Start Time</label>
+                                <input id="start_time" class="form-control" type="datetime-local" />
+                                <p class="help-block">Specify the start time.</p>
+                              </div>
+                          
+                             
+                              <div class="form-group">
+                                <label for="end_time">End Time</label>
+                                <input id="end_time" class="form-control" type="datetime-local" />
+                                <p class="help-block">Specify the end time.</p>
+                              </div> -->
+                          
+                              <!-- Description Field -->
+                              <div class="form-group">
+                                <label for="sub_name">subject name</label>
+                                <input type="text" id="gameType" class="form-control" placeholder="Enter subject name">
+                                <p class="help-block">Provide a subject name.</p>
+                              </div>
+                          
+                              <!-- Info Field -->
+                              <div class="form-group">
+                                <label for="info">Book Title </label>
+                                <input id="title" class="form-control" type="text" placeholder="Enter book title" />
+                                <p class="help-block">Include any relevant details.</p>
+                              </div>
+                              <div class="form-group">
+                                <label for="resultFile">Upload File:</label>
+                                <input type="file" id="resultFile" class="form-control" required />
+                            </div>
+                          
+                              <!-- Submit Button -->
+                              <button type="submit" onclick="submitContest()" class="btn btn-info">Upload Content</button>
+                            <!-- </form> -->
+                          </div>
+                          
+                    </div>
+                </div>
+
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <div id="footer-sec">
+        &copy; 2025 YourCompany | Design By : <a href="http://www.binarytheme.com/" target="_blank">itisiye.com</a>
+    </div>
+    <!-- /. FOOTER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+    
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+
+
+  <script type="text/javascript" src="../js/constants.js"></script>
+
+
+    <script>
+       
+      //   var contestId;
+      //      document.addEventListener("DOMContentLoaded", function () {
+      //     // Retrieve the access token and refresh token from local storage
+      //     const accessToken = localStorage.getItem("b2Win_admin_access_token") || "";
+      //     const refreshToken = localStorage.getItem("b2Win_admin_refresh_token") || "";
+      
+      //     // Check if both tokens exist
+      //     if (!accessToken || !refreshToken) {
+      //         console.warn("Tokens are missing. Redirecting to login...");
+      //         window.location.href = "index.html"; // Redirect to login page
+      //     } else {
+      //         console.log("Tokens exist. Proceeding to fetch contests...");
+      //         const queryString = window.location.search;
+      
+      //         const urlParams = new URLSearchParams(queryString);
+      
+      //       // Get the content_id from the URL
+      //       const contest_id = urlParams.get('contest_id');
+      //       contestId=contest_id;
+      //        //getContest();
+      
+      //     }
+      // });
+      
+      
+      async function submitContest() {
+           // event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const title = document.getElementById("title").value;
+            const startTime = document.getElementById("start_time").value;
+            const endTime = document.getElementById("end_time").value;
+            const gameType = document.getElementById("gameType").value;
+            const info=document.getElementById("info").value;
+
+            showLoader();
+
+            try {
+              
+    const url = BASE_URL+"scoring/contest/create";
+               
+
+                apiCall({
+        method: "POST",
+        url: url,
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify({
+          name: name,
+          title: title,
+          start_time: startTime,
+          end_time: endTime,
+          game_type:gameType,
+          info: {info},
+        }),
+    })
+        .then(response => {
+            hideLoader();
+            if (response.statuscode === 200) {
+              showSnackbar(response.message);
+            } else {
+                console.error("Failed with status:", response.statuscode, response.message);
+                showSnackbar(response.message);
+            }
+        })
+        .catch(error => {
+            hideLoader();
+            console.error("Failed:", error.responseText || error);
+            showSnackbar(error.responseText || error);
+        });
+            } catch (error) {
+                hideLoader();
+                console.error("Error:", error);
+                alert("An error occurred while adding the contest.");
+            }
+        }
+      
+      
+      
+      function showLoader() {
+        $("#loader").show();
+      }
+      
+      function hideLoader() {
+        $("#loader").hide();
+      }
+      
+      function isTokenExpired(token) {
+          try {
+              // Decode the token
+              const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+      
+              // Get the current time in seconds
+              const currentTime = Math.floor(Date.now() / 1000);
+      
+              // Check if the token is expired
+              return payload.exp < currentTime; // true if expired, false otherwise
+          } catch (error) {
+              console.error("Invalid JWT token:", error.message);
+              return true; // Assume invalid tokens are expired
+          }
+      }
+      
+      
+      function logout() {
+        localStorage.removeItem("b2Win_admin_access_token");
+          localStorage.removeItem("b2Win_admin_refresh_token");
+          localStorage.removeItem("b2Win_admin_uid");
+          localStorage.removeItem("b2Win_admin_email");
+          localStorage.removeItem("b2Win_admin_referralCode");
+      
+          window.location.href = "index.html";
+      }
+      
+      
+      
+      function refreshAccessToken() {
+        const refreshToken = localStorage.getItem("b2Win_admin_refresh_token");
+      if (!refreshToken) {
+          console.error("No refresh token found. Redirecting to login...");
+          logout();
+          return Promise.reject("Refresh token missing");
+        }
+        return $.ajax({
+          url: BASE_URL+"reg_auth/session/refresh_token",
+          method: "POST",
+          contentType: "application/json",
+          headers: { "x-token": refreshToken },
+        }).then(response => {
+          if (response.statuscode === 200 && response.data?.access_token) {
+            localStorage.setItem("b2Win_admin_access_token", response.data.access_token);
+            localStorage.setItem("b2Win_admin_refresh_token", response.data.refresh_token);
+            console.log("Token refreshed successfully!");
+            return response.data.access_token;
+          } else {
+            console.error("Failed to refresh token:", response.message);
+            logout(); // Redirect to login
+          }
+        }).catch(error => {
+          console.error("Error refreshing token:", error);
+          logout(); // Redirect to login
+        });
+      }
+      
+      
+      function apiCall(options) {
+        const accessToken = localStorage.getItem("b2Win_admin_access_token");
+      
+        return $.ajax({
+          ...options,
+          headers: {
+            ...options.headers,
+            "x-token": accessToken, // Add the access token to headers
+          },
+        }).catch(error => {
+          // If the token is expired (status code 401), refresh the token
+          if (error.status === 401) {
+            return refreshAccessToken().then(newAccessToken => {
+              // Retry the original request with the new access token
+              return $.ajax({
+                ...options,
+                headers: {
+                  ...options.headers,
+                  "x-token": newAccessToken,
+                },
+              });
+            });
+          } else {
+            // Other errors
+            console.error("Failed to refresh token:", refreshError);
+              logout();
+            return Promise.reject(error);
+          }
+        });
+      }
+      
+      
+          </script>
+</body>
+</html>

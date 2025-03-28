@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STUD.AI_Admin</title>
+
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/responsive.css" rel="stylesheet" />
+
+    <style type="text/css">
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-custom {
+            background-color: #2706b8;
+            border-color: #fcfcfc;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #e04e2b;
+            border-color: #e04e2b;
+        }
+    </style>
+</head>
+<body style="background-color: #E2E2E2;">
+    <div class="hero_area">
+        <div class="hero_bg_box">
+            <div class="bg_img_box">
+                <img src="images/hero-bg.png" alt="">
+            </div>
+        </div>
+
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+                        <span>STUD.AI</span><br>
+                        <small style="color: yellow; font-weight: bold;">Elevate Your Learning</small>
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <section class="slider_section ">
+            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="login-card" id="login">
+                                        <hr />
+                                        <h3>Admin Login</h3>
+                                        <br />
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                            <input type="text" id="email" class="form-control" placeholder="Your Username" />
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                            <input type="password" id="password" class="form-control" placeholder="Your Password" />
+                                            <span class="input-group-addon" style="cursor: pointer;" onclick="togglePassword()">
+                                                <i id="eye-icon" class="fa fa-eye"></i>
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" /> <b>Remember me</b>
+                                            </label>
+                                            <span class="pull-right">
+                                                <a href="index.html"><b>Forget password?</b></a> 
+                                            </span>
+                                        </div>
+                                        <button onclick="login();"  class="btn btn-custom">Login Now</button>
+                                        <!-- <button onclick="window.location.href='dashboard.html';"  class="btn btn-custom">Login Now</button> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="img-box">
+                                        <img src="images/slider-img.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/constants.js"></script>
+
+    <script type="text/javascript">
+        function login() {
+            const url = "https://test.api.itisiya.com/login/";  
+            var username = $("#email").val();
+            var password = $("#password").val();
+            console.log("email:", username);
+            console.log("password:", password);
+            showLoader();
+            
+            $.ajax({
+                url: url,
+                method: "POST",
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify({
+                    username: username,
+                    password: password,
+                    devicetoken: "",
+                    devicetype: ""
+                }),
+                success: function (response) {
+                    hideLoader();
+                    if (response.statuscode === 200) {
+                        var access_token = response.data?.access_token;
+                        if (access_token) {
+                            const profile = response.data.profile;
+                            const id = profile.id;
+                            const email = profile.email;
+                            const referralCode = profile.referral_code;
+
+                            localStorage.setItem("access_token", access_token);
+                            localStorage.setItem("uid", id);
+                            localStorage.setItem("email", email);
+                            localStorage.setItem("eferralCode", referralCode);
+
+                            setTimeout(function () {
+                                window.location.href = "dashboard.html";
+                            }, 100);
+                        }
+                    } else {
+                        console.error("Login failed with status:", response.statuscode, response.message);
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    hideLoader();
+                    console.error("Login failed:", xhr.responseText || error);
+                }
+            });
+        }
+
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.getElementById("eye-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";  
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";  
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+
+        function showLoader() {
+            $("#loader").show();
+        }
+
+        function hideLoader() {
+            $("#loader").hide();
+        }
+    </script>
+</body>
+</html>
