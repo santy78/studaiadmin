@@ -249,10 +249,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+console.log("Student Data: finding start");
 function GetStudent() {
     const url = "https://test.api.itisiya.com/profile/activelist";  
     const accessToken = localStorage.getItem("access_token");
-
+    console.log("Student Api call mmidd");
     if (!accessToken) {
         console.error("No access token found! Redirecting to login...");
         window.location.href = "login.html"; // Redirect to login if needed
