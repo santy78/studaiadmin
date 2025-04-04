@@ -249,7 +249,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-console.log("Student Data: finding start");
+
+window.onload = function () {
+    console.log("Student Data: finding start");
+    GetStudent();
+};
 function GetStudent() {
     const url = "https://test.api.itisiya.com/profile/activelist";  
     const accessToken = localStorage.getItem("access_token");
