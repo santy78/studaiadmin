@@ -105,7 +105,7 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="studentTable">
+                    <!-- <tbody id="studentTable">
                         <tr>
                             <td>1</td>
                             <td>John Doe</td>
@@ -127,7 +127,11 @@
                             <td>B</td>
                             <td><button class="btn btn-danger">Block</button></td>
                         </tr>
+                    </tbody> -->
+                    <tbody id="studentTable">
+                        <!-- Student data will be inserted here -->
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -148,8 +152,71 @@
     <script src="assets/js/custom.js"></script>
 
     <script>
-        
+        document.addEventListener("DOMContentLoaded", function () {
+    // Retrieve the access token and refresh token from local storage
+    const accessToken = localStorage.getItem("b2Win_admin_access_token") || "";
+    const refreshToken = localStorage.getItem("b2Win_admin_refresh_token") || "";
 
+    // Check if both tokens exist
+    if (!accessToken || !refreshToken) {
+        console.warn("Tokens are missing. Redirecting to login...");
+        window.location.href = "index.html"; // Redirect to login page
+    } else {
+        console.log("Tokens exist. Proceeding to fetch contests...");
+        getContest(); // Call the function to fetch contests
+    }
+});  
+
+function fetchStudents() {
+    document.getElementById("loader").style.display = "flex";
+
+    // Retrieve access token from local storage
+    const accessToken = localStorage.getItem("b2Win_admin_access_token");
+
+    if (!accessToken) {
+        alert("Unauthorized! Please log in again.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    fetch("https://test.api.itisiya.com/profile/activelist", {
+        method: "GET",
+        headers: {
+            "Authorization":'{accessToken}`,
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("loader").style.display = "none";
+
+        if (data.statuscode === 200) {
+            const students = data.data;
+            let tableBody = "";
+
+            students.forEach(student => {
+                let statusBtn = `<button class="btn btn-success">Active</button>`;
+                tableBody += `
+                    <tr>
+                        <td>${student.userid}</td>
+                        <td>${student.fullname}</td>
+                        <td>${student.class}</td>
+                        <td>${student.school}</td>
+                        <td>${statusBtn}</td>
+                    </tr>`;
+            });
+
+            document.getElementById("studentTable").innerHTML = tableBody;
+        } else {
+            document.getElementById("studentTable").innerHTML = "<tr><td colspan='5' class='text-center'>No data available</td></tr>";
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching students:", error);
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("studentTable").innerHTML = "<tr><td colspan='5' class='text-center text-danger'>Failed to load data</td></tr>";
+    });
+}
         function getUserInfo() {
             $("#uName").text(localStorage.getItem("b2Win_admin_email") || "Admin");
         }
