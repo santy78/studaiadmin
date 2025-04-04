@@ -172,7 +172,7 @@ function fetchStudents() {
     document.getElementById("loader").style.display = "flex";
 
     // Retrieve access token from local storage
-    const accessToken = localStorage.getItem("b2Win_admin_access_token");
+    const accessToken = localStorage.getItem("access_token");
 
     if (!accessToken) {
         alert("Unauthorized! Please log in again.");
