@@ -254,6 +254,43 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 console.log("dashboard access_token", localStorage.getItem("access_token"));
+const accessToken = localStorage.getItem("access_token");
+function GetStudent() {
+            const url = "https://test.api.itisiya.com/profile/activelist";  
+            
+            console.log("email:", username);
+            console.log("password:", password);
+            showLoader();
+            
+            $.ajax({
+                url: url,
+                method: "GET",
+                contentType: "application/json; charset=UTF-8",
+                headers: {
+            "Authorization": accessToken,
+            "Content-Type": "application/json"
+        },
+                success: function (response) {
+                    hideLoader();
+
+                    
+                    if (response.statuscode === 200) {
+                        var student = response.data?.data;
+                        if (student) {
+                            console.log("students:", student);                            
+                        }
+                    } else {
+                        console.error("Login failed with status:", response.statuscode, response.message);
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    hideLoader();
+                    console.error("Login failed:", xhr.responseText || error);
+                }
+            });
+        }
+
 function getUserInfo() {
   const url = BASE_URL+"profile/profile/get_profile";
   showLoader();
