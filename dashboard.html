@@ -271,8 +271,7 @@ function GetStudent() {
         method: "GET",
         contentType: "application/json; charset=UTF-8",
         headers: {
-            "x-token": accessToken,
-            "Content-Type": "application/json"
+            "x-token": accessToken
         },
         success: function(response) {
             console.log("Student Data:", response);
