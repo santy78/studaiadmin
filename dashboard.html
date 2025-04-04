@@ -159,34 +159,8 @@
                       </tr>
                   </thead>
                   <tbody id="studentTable">
-                      <tr>
-                          <td>1</td>
-                          <td>John Doe</td>
-                          <td>10</td>
-                          <td>A</td>
-                          <td>
-                              <button class="btn btn-warning">Pending</button>                            
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>2</td>
-                          <td>Suman Smith</td>
-                          <td>7</td>
-                          <td>B</td>
-                          <td>                            
-                              <button class="btn btn-success">Active</button>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>3</td>
-                          <td>Jane Smith</td>
-                          <td>9</td>
-                          <td>B</td>
-                          <td>                            
-                              <button class="btn btn-danger">Block</button>
-                          </td>
-                      </tr>
-                  </tbody>
+                    <!-- Student data will be inserted here -->
+                </tbody>
               </table>
           </div>
       </div>
@@ -275,7 +249,22 @@ function GetStudent() {
         },
         success: function(response) {
             console.log("Student Data:", response);
-            populateStudentTable(response);
+            const students = data.data;
+            let tableBody = "";
+
+            students.forEach(student => {
+                let statusBtn = `<button class="btn btn-success">Active</button>`;
+                tableBody += `
+                    <tr>
+                        <td>${student.userid}</td>
+                        <td>${student.fullname}</td>
+                        <td>${student.class}</td>
+                        <td>${student.school}</td>
+                        <td>${statusBtn}</td>
+                    </tr>`;
+            });
+
+            document.getElementById("studentTable").innerHTML = tableBody;
             hideLoader();
         },
         error: function(xhr, status, error) {
