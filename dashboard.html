@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
+console.log("dashboard access_token", localStorage.getItem("access_token"));
 function getUserInfo() {
   const url = BASE_URL+"profile/profile/get_profile";
   showLoader();
