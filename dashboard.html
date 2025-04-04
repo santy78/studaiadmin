@@ -248,30 +248,48 @@ function GetStudent() {
             "x-token": accessToken
         },
         success: function(response) {
-            console.log("Student Data:", response);
-            const students = data.data;
-            let tableBody = "";
+            console.log("Fetched Student Data:", response);
 
-            students.forEach(student => {
-                let statusBtn = `<button class="btn btn-success">Active</button>`;
-                tableBody += `
-                    <tr>
-                        <td>${student.userid}</td>
-                        <td>${student.fullname}</td>
-                        <td>${student.class}</td>
-                        <td>${student.school}</td>
-                        <td>${statusBtn}</td>
-                    </tr>`;
-            });
-
-            document.getElementById("studentTable").innerHTML = tableBody;
-            hideLoader();
+            // Ensure response contains student data
+            if (response && response.students && Array.isArray(response.students)) {
+                populateStudentTable(response.students);
+            } else {
+                console.error("Unexpected API response format:", response);
+            }
         },
         error: function(xhr, status, error) {
-            console.error("Error fetching students:", xhr.responseText);
-            hideLoader();
+            console.error("Error fetching student data:", error);
         }
     });
+}
+function populateStudentTable(students) {
+    const tableBody = $("#studentTable");
+    tableBody.empty(); // Clear existing rows
+
+    students.forEach((student, index) => {
+        let row = `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${student.name}</td>
+                <td>${student.class}</td>
+                <td>${student.section}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="viewStudent(${student.id})">View</button>
+                    <button class="btn btn-danger btn-sm" onclick="blockStudent(${student.id})">Block</button>
+                </td>
+            </tr>
+        `;
+        tableBody.append(row);
+    });
+}
+
+// Sample functions for actions
+function viewStudent(studentId) {
+    alert("Viewing Student ID: " + studentId);
+}
+
+function blockStudent(studentId) {
+    alert("Blocking Student ID: " + studentId);
 }
 
 
