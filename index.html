@@ -148,7 +148,7 @@
                 }),
                 success: function (response) {
                     hideLoader();
-                    console.log(response);
+                    console.log( response.data?.access_token);
                     if (response.statuscode === 200) {
                         var access_token = response.data?.access_token;
                         if (access_token) {
