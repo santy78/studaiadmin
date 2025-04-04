@@ -271,7 +271,7 @@ function GetStudent() {
         method: "GET",
         contentType: "application/json; charset=UTF-8",
         headers: {
-            "Authorization": accessToken,
+            "x-token": accessToken,
             "Content-Type": "application/json"
         },
         success: function(response) {
