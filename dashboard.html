@@ -51,6 +51,9 @@
 </style>
 </head>
 <body>
+  <div class="top-header">
+    <button class="btn btn-primary" onclick="openLinkStudentModal()">Link Student</button>
+  </div>
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -169,6 +172,29 @@
     <div id="loader" style="display: none;">
   <div class="spinner"></div>
     </div>
+    <div class="modal fade" id="linkStudentModal" tabindex="-1" aria-labelledby="linkStudentModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+          <div class="modal-header">
+            <h5 class="modal-title">Link Student by Email</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <input type="email" id="studentEmail" class="form-control" placeholder="Enter student email">
+              <button class="btn btn-outline-secondary" onclick="searchStudentByEmail()">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <div id="studentDetails" style="display: none;">
+              <p><strong>Name:</strong> <span id="studentName"></span></p>
+              <p><strong>Email:</strong> <span id="studentEmailDisplay"></span></p>
+              <button class="btn btn-success" onclick="linkStudent()">Link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div id="footer-sec">
         &copy; 2014 YourCompany | Design By : <a href="http://www.binarytheme.com/" target="_blank">itisiya.com</a>
@@ -228,6 +254,13 @@ window.onload = function () {
     console.log("Student Data: finding start");
     GetStudent();
 };
+
+function openLinkStudentModal() {
+            document.getElementById("studentEmail").value = '';
+            document.getElementById("studentDetails").style.display = 'none';
+            const modal = new bootstrap.Modal(document.getElementById('linkStudentModal'));
+            modal.show();
+        }
 function GetStudent() {
     const url = "https://test.api.itisiya.com/profile/activelist";  
     const accessToken = localStorage.getItem("access_token");
@@ -374,7 +407,11 @@ function isTokenExpired(token) {
 
 
 
-
+function logout() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("b2Win_email");
+  window.location.href = "login.html";
+}
 
 
 function refreshAccessToken() {

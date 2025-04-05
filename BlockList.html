@@ -290,7 +290,11 @@ function populateStudentTable(students) {
         tableBody.append(row);
     });
 }
-
+function logout() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("b2Win_email");
+  window.location.href = "login.html";
+}
 // Sample functions for actions
 function Reactive(studentId) {
   console.log("Fetched Student Id:", studentId);
