@@ -141,39 +141,13 @@
                           <th>ID</th>
                           <th>Name</th>
                           <th>Class</th>
-                          <th>Section</th>
+                          <th>Email</th>
                           <th>Actions</th>
                       </tr>
                   </thead>
                   <tbody id="studentTable">
-                      <tr>
-                          <td>1</td>
-                          <td>John Doe</td>
-                          <td>10</td>
-                          <td>A</td>
-                          <td>
-                            <button class="btn btn-primary">Re-Active</button>                           
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>2</td>
-                          <td>Suman Smith</td>
-                          <td>7</td>
-                          <td>B</td>
-                          <td>                            
-                            <button class="btn btn-primary">Re-Active</button> 
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>3</td>
-                          <td>Jane Smith</td>
-                          <td>9</td>
-                          <td>B</td>
-                          <td>                            
-                            <button class="btn btn-primary">Re-Active</button> 
-                          </td>
-                      </tr>
-                  </tbody>
+                    <!-- Data will be populated -->
+                </tbody>
               </table>
           </div>
       </div>
@@ -202,8 +176,8 @@
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function () {
     // Retrieve the access token and refresh token from local storage
-    const accessToken = localStorage.getItem("b2Win_admin_access_token") || "";
-    const refreshToken = localStorage.getItem("b2Win_admin_refresh_token") || "";
+    const accessToken = localStorage.getItem("access_token") || "";
+    const refreshToken = localStorage.getItem("refresh_token") || "";
 
     // Check if both tokens exist
     // if (!accessToken || !refreshToken) {
@@ -214,6 +188,7 @@
     //     getUserInfo(); // Call the function to fetch contests
     // }
 });
+
 
 
 document.getElementById("searchInput").addEventListener("keyup", function() {
@@ -228,6 +203,104 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
         }
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector("table");
+    const headers = table.querySelectorAll("th");
+    const tbody = table.querySelector("tbody");
+
+    headers.forEach((header, index) => {
+        header.addEventListener("click", () => {
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const isAscending = header.dataset.order === "asc";
+            header.dataset.order = isAscending ? "desc" : "asc";
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[index].innerText.trim();
+                const cellB = rowB.cells[index].innerText.trim();
+
+                if (!isNaN(cellA) && !isNaN(cellB)) {
+                    return isAscending ? cellA - cellB : cellB - cellA;
+                }
+
+                return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            });
+
+            tbody.innerHTML = "";
+            tbody.append(...rows);
+        });
+    });
+});
+
+window.onload = function () {
+    console.log("Student Data: finding start");
+    GetblockStudent();
+};
+function GetblockStudent() {
+    const url = "https://test.api.itisiya.com/profile/blockist";  
+    const accessToken = localStorage.getItem("access_token");
+    console.log("Student Api call mmidd");
+    if (!accessToken) {
+        console.error("No access token found! Redirecting to login...");
+        window.location.href = "login.html"; // Redirect to login if needed
+        return;
+    }
+
+    showLoader();
+    
+    $.ajax({
+        url: url,
+        method: "GET",
+        contentType: "application/json; charset=UTF-8",
+        headers: {
+            "x-token": accessToken
+        },
+        success: function(response) {
+            console.log("Fetched Student Data:", response);
+
+            // Ensure response contains student data
+            if (response && response.data && Array.isArray(response.data)) {
+                
+                populateStudentTable(response.data);
+            } else {
+                console.error("Unexpected API response format:", response);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching student data:", error);
+        }
+    });
+    hideLoader();
+}
+function populateStudentTable(students) {
+    const tableBody = $("#studentTable");
+    tableBody.empty(); // Clear existing rows
+
+    students.forEach((student, index) => {
+        let row = `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${student.fullname}</td>
+                <td>${student.email}</td>
+                <td>${student.class}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="viewStudent(${student.id})">View</button>
+                    <button class="btn btn-danger btn-sm" onclick="blockStudent(${student.id})">Block</button>
+                </td>
+            </tr>
+        `;
+        tableBody.append(row);
+    });
+}
+
+// Sample functions for actions
+function viewStudent(studentId) {
+    alert("Viewing Student ID: " + studentId);
+}
+
+function blockStudent(studentId) {
+    alert("Blocking Student ID: " + studentId);
+}
+
 
 function getUserInfo() {
   const url = BASE_URL+"profile/profile/get_profile";
