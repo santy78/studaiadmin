@@ -283,8 +283,7 @@ function populateStudentTable(students) {
                 <td>${student.email}</td>
                 <td>${student.class}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" onclick="viewStudent(${student.id})">View</button>
-                    <button class="btn btn-danger btn-sm" onclick="blockStudent(${student.id})">Block</button>
+                    <button class="btn btn-primary btn-sm" onclick="Reactive(${student.id})">Reactive</button>
                 </td>
             </tr>
         `;
@@ -293,8 +292,25 @@ function populateStudentTable(students) {
 }
 
 // Sample functions for actions
-function viewStudent(studentId) {
-    alert("Viewing Student ID: " + studentId);
+function Reactive(studentId) {
+  const url = `https://test.api.itisiya.com/profile/status?userid=${studentId}&status=true`;
+  showLoader();
+  $.ajax({
+    url,
+    method: "POST",
+    headers: {
+      "x-token": localStorage.getItem("access_token")
+    },
+    success: function (res) {
+      alert("Student reactivated successfully!");
+      GetblockStudent(); // Refresh table
+    },
+    error: function (err) {
+      console.error(err);
+      alert("Failed to reactivate student.");
+    },
+    complete: hideLoader
+  });
 }
 
 function blockStudent(studentId) {
