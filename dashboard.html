@@ -153,8 +153,8 @@
                     <tr>
                       <th data-order="asc">ID</th>
                       <th data-order="asc">Name</th>
+                      <th data-order="asc">Email</th>
                       <th data-order="asc">Class</th>
-                      <th data-order="asc">Section</th>
                       <th>Actions</th>
                   </tr>
                   </thead>
@@ -270,9 +270,9 @@ function populateStudentTable(students) {
         let row = `
             <tr>
                 <td>${index + 1}</td>
-                <td>${student.name}</td>
+                <td>${student.fullname}</td>
+                <td>${student.email}</td>
                 <td>${student.class}</td>
-                <td>${student.section}</td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="viewStudent(${student.id})">View</button>
                     <button class="btn btn-danger btn-sm" onclick="blockStudent(${student.id})">Block</button>
