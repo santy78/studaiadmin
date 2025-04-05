@@ -150,16 +150,16 @@
               <!-- Student Table -->
               <table class="table table-bordered">
                   <thead>
-                      <tr>
-                        <th data-order="asc">ID </th>
-                        <th data-order="asc">Name</th>
-                        <th data-order="asc">Class</th>
-                        <th data-order="asc">Section</th>
-                        <th>Actions</th>
-                      </tr>
+                    <tr>
+                      <th data-order="asc">ID</th>
+                      <th data-order="asc">Name</th>
+                      <th data-order="asc">Class</th>
+                      <th data-order="asc">Section</th>
+                      <th>Actions</th>
+                  </tr>
                   </thead>
                   <tbody id="studentTable">
-                    <!-- Student data will be inserted here -->
+                    <!-- Data will be populated -->
                 </tbody>
               </table>
           </div>
@@ -251,8 +251,8 @@ function GetStudent() {
             console.log("Fetched Student Data:", response);
 
             // Ensure response contains student data
-            if (response && response.students && Array.isArray(response.students)) {
-                populateStudentTable(response.students);
+            if (response && response.data && Array.isArray(response.data)) {
+                populateStudentTable(response.data);
             } else {
                 console.error("Unexpected API response format:", response);
             }
@@ -385,7 +385,7 @@ if (!refreshToken) {
   });
 }
 function apiCall(options) {
-  const accessToken = localStorage.getItem("b2Win_admin_access_token");
+  const accessToken = localStorage.getItem("access_token");
 
   return $.ajax({
     ...options,
