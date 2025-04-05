@@ -293,6 +293,7 @@ function populateStudentTable(students) {
 
 // Sample functions for actions
 function Reactive(studentId) {
+  console.log("Fetched Student Id:", studentId);
   const url = `https://test.api.itisiya.com/profile/status?userid=${studentId}&status=true`;
   showLoader();
   $.ajax({
