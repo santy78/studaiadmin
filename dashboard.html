@@ -291,7 +291,25 @@ function viewStudent(studentId) {
 }
 
 function blockStudent(studentId) {
-    alert("Blocking Student ID: " + studentId);
+  console.log("Fetched Student Id:", studentId);
+  const url = `https://test.api.itisiya.com/profile/status?userid=${studentId}&status=false`;
+  showLoader();
+  $.ajax({
+    url,
+    method: "POST",
+    headers: {
+      "x-token": localStorage.getItem("access_token")
+    },
+    success: function (res) {
+      alert("Student block successfully!");
+      GetblockStudent(); // Refresh table
+    },
+    error: function (err) {
+      console.error(err);
+      alert("Failed to block student.");
+    },
+    complete: hideLoader
+  });
 }
 
 
