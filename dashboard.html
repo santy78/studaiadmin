@@ -252,7 +252,7 @@ function GetStudent() {
 
             // Ensure response contains student data
             if (response && response.data && Array.isArray(response.data)) {
-                hideLoader();
+                
                 populateStudentTable(response.data);
             } else {
                 console.error("Unexpected API response format:", response);
@@ -262,6 +262,7 @@ function GetStudent() {
             console.error("Error fetching student data:", error);
         }
     });
+    hideLoader();
 }
 function populateStudentTable(students) {
     const tableBody = $("#studentTable");
