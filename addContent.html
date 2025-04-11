@@ -199,39 +199,55 @@
 
     <script>
        
-      //   var contestId;
-      //      document.addEventListener("DOMContentLoaded", function () {
-      //     // Retrieve the access token and refresh token from local storage
-      //     const accessToken = localStorage.getItem("b2Win_admin_access_token") || "";
-      //     const refreshToken = localStorage.getItem("b2Win_admin_refresh_token") || "";
-      
-      //     // Check if both tokens exist
-      //     if (!accessToken || !refreshToken) {
-      //         console.warn("Tokens are missing. Redirecting to login...");
-      //         window.location.href = "index.html"; // Redirect to login page
-      //     } else {
-      //         console.log("Tokens exist. Proceeding to fetch contests...");
-      //         const queryString = window.location.search;
-      
-      //         const urlParams = new URLSearchParams(queryString);
-      
-      //       // Get the content_id from the URL
-      //       const contest_id = urlParams.get('contest_id');
-      //       contestId=contest_id;
-      //        //getContest();
-      
-      //     }
-      // });
-      
+     
+       const conv="";
+       
+       async function createconverstation() {
+           // event.preventDefault();
+
+            
+            const agent="";
+
+            showLoader();
+
+            try {
+              
+    const url = "https://test.api.itisiya.com/chat/create_conversation";
+               
+
+                apiCall({
+        method: "POST",
+        url: url,
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify({
+          agent: agent          
+        }),
+    })
+        .then(response => {
+            hideLoader();
+            conv=response.id;
+            
+        })
+        .catch(error => {
+            hideLoader();
+            console.error("Failed:", error.responseText || error);
+            showSnackbar(error.responseText || error);
+        });
+            } catch (error) {
+                hideLoader();
+                console.error("Error:", error);
+                alert("An error occurred while adding the contest.");
+            }
+        }
       
       async function submitContest() {
            // event.preventDefault();
 
-            const name = document.getElementById("name").value;
-            const title = document.getElementById("title").value;
-            const startTime = document.getElementById("start_time").value;
-            const endTime = document.getElementById("end_time").value;
-            const gameType = document.getElementById("gameType").value;
+            const syllabus_short_name = document.getElementById("syllabus_short_name").value;
+            const class_name = document.getElementById("class_name").value;
+            const sub_name = document.getElementById("sub_name").value;
+            const book_title = document.getElementById("book_title").value;
+            const chapter_number  = document.getElementById("chapter_number").value ;
             const info=document.getElementById("info").value;
 
             showLoader();
@@ -328,8 +344,8 @@
           headers: { "x-token": refreshToken },
         }).then(response => {
           if (response.statuscode === 200 && response.data?.access_token) {
-            localStorage.setItem("b2Win_admin_access_token", response.data.access_token);
-            localStorage.setItem("b2Win_admin_refresh_token", response.data.refresh_token);
+            localStorage.setItem("access_token", response.data.access_token);
+            localStorage.setItem("refresh_token", response.data.refresh_token);
             console.log("Token refreshed successfully!");
             return response.data.access_token;
           } else {
@@ -344,7 +360,7 @@
       
       
       function apiCall(options) {
-        const accessToken = localStorage.getItem("b2Win_admin_access_token");
+        const accessToken = localStorage.getItem("access_token");
       
         return $.ajax({
           ...options,
