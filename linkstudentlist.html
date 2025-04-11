@@ -99,7 +99,7 @@
                     <li>
                       <a href="#"><i class="fa fa-dollar "></i>Students <span class="fa arrow"></span></a>
                        <ul class="nav nav-second-level">
-                         
+                        
                            <li>
                               <a href="dashboard.html"><i class="fa fa-dollar "></i>Get All Student </a>
                           </li>
@@ -174,7 +174,7 @@
     </div>
 
     <div id="footer-sec">
-        &copy; 2014 YourCompany | Design By : <a href="http://www.binarytheme.com/" target="_blank">itisiya.com</a>
+        &copy; 2014 YourCompany | Design By : <a href="http://www.itisiya.com/" target="_blank">itisiya.com</a>
     </div>
     <!-- /. FOOTER  -->
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -237,7 +237,7 @@ window.onload = function () {
 
 
 function GetStudent() {
-    const url = "https://test.api.itisiya.com/profile/activelist";  
+    const url = "https://test.api.itisiya.com/profile/unlinklist";  
     const accessToken = localStorage.getItem("access_token");
     console.log("Student Api call mmidd");
     if (!accessToken) {
@@ -284,8 +284,7 @@ function populateStudentTable(students) {
                 <td>${student.email}</td>
                 <td>${student.class}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" onclick="viewStudent(${student.userid})">View</button>
-                    <button class="btn btn-danger btn-sm" onclick="blockStudent(${student.userid})">Block</button>
+                   <button class="btn btn-danger btn-sm" onclick="linkStudent(${student.userid})">Link</button>
                 </td>
             </tr>
         `;
@@ -298,9 +297,9 @@ function viewStudent(studentId) {
     alert("Viewing Student ID: " + studentId);
 }
 
-function blockStudent(studentId) {
+function linkStudent(studentId) {
   console.log("Fetched Student Id:", studentId);
-  const url = `https://test.api.itisiya.com/profile/status?userid=${studentId}&status=false`;
+  const url = `https://test.api.itisiya.com/profile/linkstudent?userid=${studentId}`;
   showLoader();
   $.ajax({
     url,
@@ -309,12 +308,12 @@ function blockStudent(studentId) {
       "x-token": localStorage.getItem("access_token")
     },
     success: function (res) {
-      alert("Student block successfully!");
+      alert("Student link successfully!");
       GetStudent(); // Refresh table
     },
     error: function (err) {
       console.error(err);
-      alert("Failed to block student.");
+      alert("Failed to link student.");
     },
     complete: hideLoader
   });
