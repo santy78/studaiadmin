@@ -72,6 +72,9 @@
                     <li>
                       <a href="BlockList.html"><i class="fa fa-dollar "></i>Block Student </a>
                   </li>
+                  <li>
+                    <a href="linkstudentlist.html"><i class="fa fa-dollar "></i>Link Student </a>
+                </li>
                 </ul>
               </li>
               <li>
@@ -242,54 +245,57 @@
       
       async function submitContest() {
            // event.preventDefault();
+           const accessToken = localStorage.getItem("access_token");
 
             const syllabus_short_name = document.getElementById("syllabus_short_name").value;
             const class_name = document.getElementById("class_name").value;
             const sub_name = document.getElementById("sub_name").value;
             const book_title = document.getElementById("book_title").value;
             const chapter_number  = document.getElementById("chapter_number").value ;
-            const info=document.getElementById("info").value;
+            const fileInput = document.getElementById("file");
+            const formData = new FormData();
+            formData.append("syllabus_short_name", syllabus_short_name);
+            formData.append("class_name", class_name);
+            formData.append("sub_name", sub_name);
+            formData.append("book_title", book_title);
+            formData.append("chapter_number", chapter_number);
+
+    if (fileInput.files.length > 0) {
+        formData.append("files", fileInput.files[0]);
+    } else {
+        alert("Please select a file.");
+        return;
+    }
 
             showLoader();
 
             try {
-              
-    const url = BASE_URL+"scoring/contest/create";
-               
+        const response = await fetch(
+            `https://test.api.itisiya.com/llm/vector/syllabus_documents_embedding/?syllabus_short_name=${syllabus_short_name}&class_name=${class_name}&sub_name=${sub_name}&book_title=${book_title}&chapter_number=${chapter_number}`,
+            {
+                method: "POST",
+                headers: {
+                    "x-token": accessToken
+                },
+                body: formData
+            }
+        );
 
-                apiCall({
-        method: "POST",
-        url: url,
-        contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify({
-          name: name,
-          title: title,
-          start_time: startTime,
-          end_time: endTime,
-          game_type:gameType,
-          info: {info},
-        }),
-    })
-        .then(response => {
-            hideLoader();
-            if (response.statuscode === 200) {
-              showSnackbar(response.message);
-            } else {
-                console.error("Failed with status:", response.statuscode, response.message);
-                showSnackbar(response.message);
-            }
-        })
-        .catch(error => {
-            hideLoader();
-            console.error("Failed:", error.responseText || error);
-            showSnackbar(error.responseText || error);
-        });
-            } catch (error) {
-                hideLoader();
-                console.error("Error:", error);
-                alert("An error occurred while adding the contest.");
-            }
+        const result = await response.json();
+        hideLoader();
+
+        if (response.status === 200) {
+            showSnackbar(result.message || "Upload successful!");
+        } else {
+            console.error("Upload failed:", result);
+            showSnackbar(result.message || "Upload failed.");
         }
+    } catch (error) {
+        hideLoader();
+        console.error("Error:", error);
+        alert("An error occurred while uploading the document.");
+    }
+}
       
       
       
