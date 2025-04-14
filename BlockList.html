@@ -62,6 +62,21 @@
     font-size: 16px;
 }
 
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.action-btn {
+    min-width: 80px;
+    text-align: center;
+}
+
 </style>
 </head>
 <body>
@@ -168,20 +183,22 @@
               </div>
       
               <!-- Student Table -->
-              <table class="table table-bordered">
-                  <thead>
+              <div class="table-container">
+                <table class="table table-bordered table-striped">
+                    <thead>
                       <tr>
-                          <th>ID</th>
-                          <th>Name</th>
-                          <th>Class</th>
-                          <th>Email</th>
-                          <th>Actions</th>
+                        <th data-order="asc">ID</th>
+                        <th data-order="asc">Name</th>
+                        <th data-order="asc">Email</th>
+                        <th data-order="asc">Class</th>
+                        <th class="action-btn">Actions</th>
                       </tr>
-                  </thead>
-                  <tbody id="studentTable">
-                    <!-- Data will be populated -->
-                </tbody>
-              </table>
+                    </thead>
+                    <tbody id="studentTable">
+                      <!-- Data will be populated -->
+                    </tbody>
+                </table>
+              </div>
           </div>
       </div>
     <!-- /. WRAPPER  -->
