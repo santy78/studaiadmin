@@ -45,7 +45,21 @@
       transform: rotate(360deg);
     }
   }
+  body, html {
+    overflow-x: hidden;
+}
 
+.search-bar-container {
+    display: flex;
+    justify-content: start;
+    padding: 10px 0;
+}
+
+.search-bar-container input {
+    width: 300px;
+    padding: 6px 10px;
+    font-size: 16px;
+}
 
 
 </style>
@@ -147,7 +161,9 @@
               <!-- Search Bar -->
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Student List</h2>
-                <input type="text" id="searchInput" class="form-control w-25" placeholder="Search students...">
+                <div  class="search-bar-container">
+                  <input type="text" id="searchInput"  placeholder="Search students...">
+              </div>
               </div>
       
               <!-- Student Table -->
