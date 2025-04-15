@@ -291,7 +291,7 @@
         hideLoader();
 
         if (response.status === 200) {
-            showSnackbar(result.message || "Upload successful!");
+        alert("sucessfully  uploading the document.");
         } else {
             console.error("Upload failed:", result);
             showSnackbar(result.message || "Upload failed.");
@@ -299,7 +299,7 @@
     } catch (error) {
         hideLoader();
         console.error("Error:", error);
-        alert("An error occurred while uploading the document.");
+        //alert("An error occurred while uploading the document.");
     }
 }
       
