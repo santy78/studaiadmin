@@ -267,14 +267,15 @@
             const chapter  = document.getElementById("chapter").value ;
             const prompt_type = document.getElementById("prompt_type").value;
             const prompt_content = document.getElementById("prompt_content").value;
-            const formData = new FormData();
-            formData.append("studentclass", studentclass);
-            formData.append("section", section);
-            formData.append("board", board);
-            formData.append("subject", subject);
-            formData.append("chapter", chapter);
-            formData.append("prompt_type", prompt_type);
-            formData.append("prompt_content", prompt_content);
+            const data = {
+                  board: board,
+                  student_class: studentclass,
+                  section: section,
+                  subject: subject,
+                  chapter: chapter,
+                  prompt_type: prompt_type,
+                  prompt_content: prompt_content
+    };
 
     
 
