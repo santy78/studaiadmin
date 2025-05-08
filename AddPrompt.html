@@ -168,7 +168,7 @@
                               
                             
                               <!-- Submit Button -->
-                              <button type="submit" onclick="submitContest()" class="btn btn-info">Upload Content</button>
+                              <button type="submit" onclick="submitContest()" class="btn btn-info">Insert Prompt</button>
                             <!-- </form> -->
                           </div>
                           
@@ -248,25 +248,23 @@
            // event.preventDefault();
            const accessToken = localStorage.getItem("access_token");
 
-            const syllabus_short_name = document.getElementById("syllabus_short_name").value;
-            const class_name = document.getElementById("class_name").value;
-            const sub_name = document.getElementById("sub_name").value;
-            const book_title = document.getElementById("book_title").value;
-            const chapter_number  = document.getElementById("chapter_number").value ;
-            const fileInput = document.getElementById("file");
+            const studentclass = document.getElementById("studentclass").value;
+            const section = document.getElementById("section").value;
+            const board = document.getElementById("board").value;
+            const subject = document.getElementById("subject").value;
+            const chapter  = document.getElementById("chapter").value ;
+            const prompt_type = document.getElementById("prompt_type").value;
+            const prompt_content = document.getElementById("prompt_content").value;
             const formData = new FormData();
-            formData.append("syllabus_short_name", syllabus_short_name);
-            formData.append("class_name", class_name);
-            formData.append("sub_name", sub_name);
-            formData.append("book_title", book_title);
-            formData.append("chapter_number", chapter_number);
+            formData.append("studentclass", studentclass);
+            formData.append("section", section);
+            formData.append("board", board);
+            formData.append("subject", subject);
+            formData.append("chapter", chapter);
+            formData.append("prompt_type", prompt_type);
+            formData.append("prompt_content", prompt_content);
 
-    if (fileInput.files.length > 0) {
-        formData.append("files", fileInput.files[0]);
-    } else {
-        alert("Please select a file.");
-        return;
-    }
+    
 
             showLoader();
 
