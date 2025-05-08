@@ -286,11 +286,11 @@
             {
                 method: "POST",
                 headers: {
-                    "x-token": accessToken
-                },
-                body: formData
-            }
-        );
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify(data)
+        });
 
         const result = await response.json();
         hideLoader();
