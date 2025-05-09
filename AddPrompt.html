@@ -286,8 +286,7 @@
     `https://test.api.itisiya.com/llm/rag/mcq/syllabus/create_prompt/`,
     {
         method: "POST",
-        headers: {
-            "Authorization": `Bearer ${accessToken}`,
+        headers: { "x-token": `${accessToken}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(data)  // ✅ Correct key
